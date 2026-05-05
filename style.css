@@ -1,0 +1,100 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+    display: flex;
+    flex-direction: column; /* Για να μπαίνει το reset button από κάτω */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;      
+    letter-spacing: 12px;    
+    text-decoration: underline; 
+    text-decoration-thickness: 3px; 
+    text-underline-offset: 10px;    
+    color: #4CAF50;             
+    margin-top: 30px;
+}
+
+.game-container {
+    text-align: center;
+    background-color: #2d2d2d;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 90%; 
+    max-width: 700px;
+}
+
+#word-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 15px;
+    margin: 20px 0;
+    min-height: 50px;
+}
+
+.input-section {
+    margin: 20px 0;
+}
+
+#user-input {
+    padding: 10px;
+    width: 90px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    text-transform: uppercase;
+    outline: none; /* Αφαιρεί το μπλε πλαίσιο όταν γίνεται κλικ */
+}
+
+
+#guess-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#guess-button:hover {
+    background-color: #45a049;
+}
+
+#guess-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+#message-board {
+    margin-top: 20px;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+.error { color: #ff5555; }
+.success { color: #55ff55; }
+
+/* Στυλ για το κουμπί reset που είναι εκτός container */
+#reset-button {
+    margin-top: 20px;
+    background: transparent;
+    color: #aaa;
+    border: 1px solid #555;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#reset-button:hover {
+    color: white;
+    border-color: white;
+}
