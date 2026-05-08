@@ -1,96 +1,165 @@
+/* --- Γενικές Ρυθμίσεις Σελίδας --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #1a1a1a;
+    
+    /* Ρυθμίσεις Φόντου */
+    background-image: url('images/wall2.jpg'); 
+    background-repeat: no-repeat;
+    background-position: center top; 
+    background-size: cover;
+    background-attachment: fixed;
+   
     color: white;
-    display: flex;
-    flex-direction: column; /* Για να μπαίνει το reset button από κάτω */
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: block; /* Απαραίτητο για να ελέγξουμε το layout εσωτερικά */
+}
+
+/* --- Κύριο Layout (Σκοινί + Παιχνίδι δίπλα-δίπλα) --- */
+.main-layout {
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-start; /* Καρφώνει το σκοινί στην κορυφή */
+    justify-content: center; /* Κεντράρει το σύνολο οριζόντια */
+    gap: 40px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Το Σκοινί --- */
+.rope-section {
+    margin-top: 0; /* Διασφαλίζει μηδενικό κενό από πάνω */
+}
+
+#rope {
+    position: absolute; /* Το βγάζει από τη ροή και το αφήνει να "πετάει" */
+    left: 170px;         /* Το κολλάει 20 pixels από την αριστερή άκρη της οθόνης */
+    top: 0;             /* Το κρατάει στο ταβάνι */
+    width: 120px;
+    height: auto;
+    z-index: 10;        /* Για να είναι σίγουρα πάνω από το φόντο */
+
+    
+    /* Ορισμός του σημείου περιστροφής: Κέντρο και Κορυφή */
+    transform-origin: top center; 
+    
+    /* Ενεργοποίηση της κίνησης */
+    animation: swing-rope 4s ease-in-out infinite;
+}
+
+/* --- Το Ταμπλό του Παιχνιδιού --- */
+.game-container {
+    margin-top: 160px; /* Δίνει απόσταση στον τίτλο από την κορυφή */
+    text-align: center;
+    background-color: rgba(45, 45, 45, 0.85); /* Ημιδιάφανο για να φαίνεται ο τοίχος */
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    width: 90%; 
+    max-width: 700px;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Λεπτό περίγραμμα για βάθος */
 }
 
 h1 {
     text-align: center;      
-    letter-spacing: 12px;    
+    letter-spacing: 8px;    
     text-decoration: underline; 
     text-decoration-thickness: 3px; 
     text-underline-offset: 10px;    
     color: #4CAF50;             
-    margin-top: 30px;
+    margin-top: 0; /* Μηδενίζουμε το margin του h1 γιατί ελέγχεται από το container */
+    margin-bottom: 30px;
 }
 
-.game-container {
-    text-align: center;
-    background-color: #2d2d2d;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    width: 90%; 
-    max-width: 700px;
-}
-
+/* --- Στοιχεία Παιχνιδιού --- */
 #word-display {
     font-size: 2.5rem;
     font-weight: bold;
-    letter-spacing: 15px;
+    letter-spacing: 12px;
     margin: 20px 0;
     min-height: 50px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 #alphabet-container {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 10px;
-    margin-top: 30px;    
+    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr)); /* Προσαρμόζεται ανάλογα με την οθόνη */
+    gap: 8px;
+    margin-top: 20px;    
 }
 
-.alphabet-letter-btn{
-    padding: 10px;
-    font-size: 1rem;
+.alphabet-letter-btn {
+    padding: 12px 5px;
+    font-size: 1.1rem;
     font-weight: bold;
     background-color: #444;
     color: white;
     border: 1px solid #555;
     border-radius: 5px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s ease;
     text-transform: uppercase;
 }
 
-.alphabet-letter-btn:hover {
+.alphabet-letter-btn:hover:not(:disabled) {
     background-color: #4CAF50; 
-    transform: scale(1.05);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
 }
 
 .alphabet-letter-btn:disabled {
     background-color: #222;
     color: #555;
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.5;
+}
+
+/* --- Μηνύματα & Stats --- */
+.stats {
+    margin: 15px 0;
+    font-size: 1.1rem;
+    color: #ddd;
 }
 
 #message-board {
     margin-top: 20px;
+    font-size: 1.2rem;
     font-weight: bold;
-    min-height: 24px;
+    min-height: 30px;
 }
 
 .error { color: #ff5555; }
 .success { color: #55ff55; }
 
-/* Στυλ για το κουμπί reset που είναι εκτός container */
+/* --- Κουμπί Reset --- */
 #reset-button {
-    margin-top: 20px;
-    background: transparent;
-    color: #aaa;
-    border: 1px solid #555;
-    padding: 5px 15px;
+    margin-top: 25px;
+    background: #4CAF50; /* Το κάναμε πιο έντονο για να φαίνεται */
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-weight: bold;
     cursor: pointer;
     border-radius: 4px;
+    transition: background 0.3s;
 }
 
 #reset-button:hover {
-    color: white;
-    border-color: white;
+    background: #45a049;
+}
+
+@keyframes swing-rope {
+    0% {
+        transform: rotate(-10deg); /* Ξεκινάει λίγο αριστερά */
+    }
+    50% {
+        transform: rotate(10deg);  /* Πηγαίνει λίγο δεξιά */
+    }
+    100% {
+        transform: rotate(-10deg); /* Επιστρέφει αριστερά */
+    }
 }

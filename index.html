@@ -7,23 +7,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <h1>ΛΟΓΙΣΜΙΚΗ <br>ΚΡΕΜΑΛΑ</h1>
+    <!-- Το κύριο πλαίσιο που θα κρατάει τα πάντα δίπλα-δίπλα -->
+    <div class="main-layout">
         
-        <div id="word-display" class="word-style"></div><br>
-
-        <div id="alphabet-container"></div>
-
-        <div class="stats">
-            Λάθη: <span id="mistakes">0</span> / <span id="max-mistakes">5</span>
+        <!-- Το σκοινί (Αριστερά ή Δεξιά) -->
+        <div class="rope-section">
+            <img src="images/rope1.png" id="rope" alt="Skoini">
         </div>
-        
-        <div id="message-board"></div>
 
-        <button id="reset-button">Νέο παιχνίδι</button>
-    </div>
-   
-    
+        <div class="game-container">
+            <h1>ΛΟΓΙΣΜΙΚΗ <br>ΚΡΕΜΑΛΑ</h1>
+            
+            <div id="word-display" class="word-style"></div><br>
+            <div id="alphabet-container"></div>
+
+            <div class="stats">
+                Λάθη: <span id="mistakes">0</span> / <span id="max-mistakes">5</span>
+            </div>
+            
+            <div id="message-board"></div>
+            <button id="reset-button">Νέο παιχνίδι</button>
+        </div>
+
+    </div> <!-- Τέλος main-layout -->
+
     <script src="script.js"></script>
 </body>
 </html>   
