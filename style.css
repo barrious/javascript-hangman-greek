@@ -3,7 +3,7 @@ body {
     background-color: #1a1a1a;
     
     /* Ρυθμίσεις Φόντου */
-    background-image: url('images/wall2.jpg'); 
+    background-image: url('images/wall.jpg'); 
     background-repeat: no-repeat;
     background-position: center top; 
     background-size: cover;
@@ -13,48 +13,52 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: block; /* Απαραίτητο για να ελέγξουμε το layout εσωτερικά */
+    display: block;
 }
 
-/* --- Κύριο Layout (Σκοινί + Παιχνίδι δίπλα-δίπλα) --- */
+/* --- Κύριο Layout (3 Στήλες στο PC) --- */
 .main-layout {
     display: flex;
     flex-direction: row; 
-    align-items: flex-start; /* Καρφώνει το σκοινί στην κορυφή */
-    justify-content: center; /* Κεντράρει το σύνολο οριζόντια */
-    gap: 40px; 
+    align-items: flex-start; 
+    justify-content: space-between; 
+    gap: 20px; 
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative; /* Απαραίτητο για το absolute layer του σκοινιού στο κινητό */
 }
 
-/* --- Το Σκοινί --- */
-.rope-section {
-    margin-top: 0;                  /* Διασφαλίζει μηδενικό κενό από πάνω */
+/* --- ΣΤΗΛΗ 1: Το Σκοινί (PC - Αριστερή Πλευρά) --- */
+.left-rope-column {
+    flex: 0 0 20px;       /* για να κολλήσει τέρμα αριστερά */
+    display: flex;
+    justify-content: flex-start; /* Σπρώχνει το σκοινί στην αριστερή άκρη της στήλης του */
+    margin-top: -15px;    /* Αρνητικό margin για να κρυφτεί η αρχή του στην οροφή */
+    position: relative;
 }
 
 #rope {
-    position: absolute;             /* Το βγάζει από τη ροή και το αφήνει να "πετάει" */
-    left: 170px;                    /* Το κολλάει 20 pixels από την αριστερή άκρη της οθόνης */
-    top: -10px;                         /* Το κρατάει στο ταβάνι */
     width: 120px;
     height: auto;
-    z-index: 10;                    /* Για να είναι σίγουρα πάνω από το φόντο */
-    transform-origin: top center;   /* Ορισμός του σημείου περιστροφής: Κέντρο και Κορυφή */
-    animation: swing-rope 5s ease-in-out infinite;/* Ενεργοποίηση της κίνησης */
+    z-index: 10; 
+    transform-origin: top center; 
+    animation: swing-rope 5s ease-in-out infinite;
 }
 
-/* --- Το Ταμπλό του Παιχνιδιού --- */
+/* --- ΣΤΗΛΗ 2: Το Ταμπλό του Παιχνιδιού (Μέση) --- */
 .game-container {
+    flex: 3; /* Παίρνει πολύ περισσότερο χώρο για να μην στενεύει η άγνωστη λέξη */
     margin-top: 160px; 
     text-align: center;
-    background-color: rgba(45, 45, 45, 0.85); /* Ημιδιάφανο για να φαίνεται ο τοίχος */
+    background-color: rgba(45, 45, 45, 0.85); 
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    width: 90%; 
-    max-width: 600px;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Λεπτό περίγραμμα για βάθος */
+    width: 100%; 
+    max-width: 700px; /* Αυξήθηκε από 600px για μεγαλύτερη άνεση */
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    z-index: 1;
 }
 
 h1 {
@@ -64,7 +68,7 @@ h1 {
     text-decoration-thickness: 3px; 
     text-underline-offset: 10px;    
     color: #4CAF50;             
-    margin-top: 0; /* Μηδενίζουμε το margin του h1 γιατί ελέγχεται από το container */
+    margin-top: 0; 
     margin-bottom: 30px;
 }
 
@@ -77,24 +81,25 @@ h1 {
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
+
 #alphabet-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;                /* Μειώνουμε λίγο το κενό */
+    gap: 8px; 
     margin-top: 20px;
-    max-width: 650px;        /* Αυξάνουμε το πλάτος για να χωρέσουν 12 γράμματα στη σειρά */
+    max-width: 650px; 
     margin-left: auto;
     margin-right: auto;
 }
 
 .alphabet-letter-btn {
-    width: 42px;             /* Μειώνουμε ελάχιστα το πλάτος (από 45px σε 42px) */
+    width: 42px; 
     height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;         /* Μειώνουμε ελάχιστα τη γραμματοσειρά */
+    font-size: 1rem; 
     font-weight: bold;
     background-color: #444;
     color: white;
@@ -118,6 +123,21 @@ h1 {
     opacity: 0.5;
 }
 
+/* --- ΣΤΗΛΗ 3: Η Κρεμάλα (PC - Δεξιά Πλευρά) --- */
+.gallows-section {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Σπρώχνει το σετ εικόνων τέρμα δεξιά στην άκρη */
+    margin-top: 160px; 
+    margin-right: -20px;  /* Σπρώχνει την εικόνα ακόμα πιο κοντά στην άκρη της οθόνης */
+}
+
+#hangman-visual {
+    width: 200px; 
+    height: auto;
+    transition: all 0.3s ease;
+}
+
 /* --- Μηνύματα & Stats --- */
 .stats {
     margin: 15px 0;
@@ -138,7 +158,7 @@ h1 {
 /* --- Κουμπί Reset --- */
 #reset-button {
     margin-top: 25px;
-    background: #4CAF50; /* Το κάναμε πιο έντονο για να φαίνεται */
+    background: #4CAF50; 
     color: white;
     border: none;
     padding: 10px 25px;
@@ -152,14 +172,90 @@ h1 {
     background: #45a049;
 }
 
+/* --- Κίνηση Σκοινιού --- */
 @keyframes swing-rope {
-    0% {
-        transform: rotate(-20deg); /* Ξεκινάει λίγο αριστερά */
+    0% { transform: rotate(-20deg); }
+    50% { transform: rotate(20deg); }
+    100% { transform: rotate(-20deg); }
+}
+
+
+/* ==========================================================================
+   ΡΥΘΜΙΣΕΙΣ ΓΙΑ ΚΙΝΗΤΑ (Οθόνες έως 768px πλάτος)
+   ========================================================================== */
+@media (max-width: 768px) {
+    
+    .main-layout {
+        flex-direction: column;   /* Τα βάζει σε κάθετη διάταξη */
+        align-items: center;
+        padding: 0 10px;
+        padding-top: 130px;       /* Χώρος στην κορυφή για να αιωρείται το σκοινί */
     }
-    50% {
-        transform: rotate(20deg);  /* Πηγαίνει λίγο δεξιά */
+
+    /* Το σκοινί βγαίνει από τη ροή, πάει στην κορυφή και περνάει ΠΑΝΩ από τα γράμματα */
+    .left-rope-column {
+        position: absolute;       
+        top: -15px;               /* Από 10px το κάνουμε -15px για να κολλήσει στην οροφή του κινητού */        
+        left: 50%;                
+        transform: translateX(-50%); 
+        width: 100%;
+        margin-top: 0;            /* Ακύρωση του margin του PC */
+        z-index: 100;             /* Layer πάνω από το game-container */
+        pointer-events: none;     /* Επιτρέπει τα κλικ στα κουμπιά από κάτω */
+        display: flex;
     }
-    100% {
-        transform: rotate(-20deg); /* Επιστρέφει αριστερά */
+
+    #rope {
+        width: 80px;              /* Πιο μαζεμένο μέγεθος για το κινητό */
+    }
+
+    /* Το γκρι πλαίσιο του παιχνιδιού */
+    .game-container {
+        margin-top: 0;            
+        padding: 1.2rem;          
+        width: 95%;
+        max-width: 100%;          /* Πιάνει όλο το διαθέσιμο πλάτος στο κινητό */
+        z-index: 1;               /* Πίσω από το σκοινί */
+    }
+
+    h1 {
+        font-size: 1.8rem;        
+        margin-bottom: 15px;
+        letter-spacing: 4px;
+    }
+
+    #word-display {
+        font-size: 1.8rem;
+        letter-spacing: 6px;
+        margin: 10px 0;
+        min-height: 35px;
+    }
+
+    #alphabet-container {
+        gap: 5px;                 
+        margin-top: 10px;
+    }
+
+    .alphabet-letter-btn {
+        width: 32px;              
+        height: 32px;
+        font-size: 0.85rem;       
+        border-radius: 4px;
+    }
+
+    /* Η κρεμάλα μπαίνει κανονικά κάτω από το παιχνίδι και κεντράρεται */
+    .gallows-section {
+        margin-top: 20px;         
+        width: 100%;
+        justify-content: center;  /* Επαναφορά στο κέντρο για το κινητό */
+    }
+
+    #hangman-visual {
+        width: 180px;             
+    }
+    
+    #reset-button {
+        margin-top: 15px;
+        padding: 8px 20px;
     }
 }

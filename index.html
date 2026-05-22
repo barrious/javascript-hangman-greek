@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Το κύριο πλαίσιο που θα κρατάει τα πάντα δίπλα-δίπλα -->
     <div class="main-layout">
         
-        <!-- Το σκοινί (Αριστερά ή Δεξιά) -->
-        <div class="rope-section">
-            <img src="images/rope1.png" id="rope" alt="Skoini">
+        <!-- ΣΤΗΛΗ 1 (ΑΡΙΣΤΕΡΑ): Το διακοσμητικό σκοινί που κουνιέται -->
+        <div class="left-rope-column">
+            <img src="images/rope.png" id="rope" alt="Σκοινί">
         </div>
 
+        <!-- ΣΤΗΛΗ 2 (ΜΕΣΗ): Η Λογική του Παιχνιδιού -->
         <div class="game-container">
             <h1>ΛΟΓΙΣΜΙΚΗ <br>ΚΡΕΜΑΛΑ</h1>
             
@@ -27,6 +27,11 @@
             
             <div id="message-board"></div>
             <button id="reset-button">Νέο παιχνίδι</button>
+        </div>
+
+        <!-- ΣΤΗΛΗ 3 (ΔΕΞΙΑ): Η εικόνα που αλλάζει στάδια ανάλογα με το λάθος -->
+        <div class="gallows-section">
+            <img src="images/letter_0.png" id="hangman-visual" alt="Hangman State">
         </div>
 
     </div> <!-- Τέλος main-layout -->

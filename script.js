@@ -9,7 +9,7 @@ let guessedLetters = [];
 let mistakeCount = 0;
 let mistakesDone = 0;       
 let maximumMistakes = 5;    
-let lettersFound = []; // Ξεκινάει άδειος και θα γεμίζει μόλις επιλεγεί η λέξη
+let lettersFound = []; 
 
 // Επιλογή στοιχείων από το DOM
 const alphabetContainer = document.getElementById("alphabet-container");
@@ -18,15 +18,15 @@ const wordDisplay = document.getElementById("word-display");
 const message = document.getElementById("message-board");
 const numberOfMistakes = document.getElementById("mistakes");
 
+// --- ΝΕΟ: Επιλογή του στοιχείου της εικόνας της κρεμάλας ---
+const hangmanVisual = document.getElementById("hangman-visual");
+
 // Συναρτήση για την τυχαία επιλογή λέξης και εκκίνηση
 const selectRandomWord = () => {
     const randomIndex = Math.floor(Math.random() * programmingWords.length);
     currentWord = programmingWords[randomIndex];
-    
-    // Τώρα που ξέρουμε τη λέξη, φτιάχνουμε τον πίνακα lettersFound με τόσα false όσα και τα γράμματά της
     lettersFound = new Array(currentWord.length).fill(false);
 };
-
 
 const showAlphabetToScreen = () => {
     alphabetContainer.innerHTML = "";
@@ -45,9 +45,8 @@ const updateDisplay = () => {
 
     for (let i = 0; i < currentWord.length; i++) {
         if (lettersFound[i]) {
-            found += currentWord[i] + " "; // Αν το γράμμα έχει βρεθεί → το εμφανίζω
+            found += currentWord[i] + " "; 
         } else {
-            // Αν το γράμμα δεν έχει βρεθεί → εμφανίζω _
             found += " _ ";
         }
     }
@@ -56,13 +55,11 @@ const updateDisplay = () => {
 
 // Έλεγχος για νίκη ή ήττα
 const checkWinLoss = () => {
-    // Αν δεν υπάρχει κανένα false → όλα τα γράμματα βρέθηκαν
     if (!lettersFound.includes(false)) {
         message.textContent = "ΚΕΡΔΙΣΕΣ! 🎉";
         message.className = "success";
         disableAllButtons();
     } 
-    // Αν τα λάθη έφτασαν το όριο
     else if (mistakesDone >= maximumMistakes) {
         message.innerHTML = `ΚΡΕΜΑΛΑ! <br> Η λέξη ήταν: ${currentWord}`;
         message.className = "error";
@@ -76,7 +73,6 @@ const handleGuess = (element, buttonClicked) => {
 
     let userInput = element;
     if (currentWord.includes(userInput)) {
-        // Βρίσκω όλες τις θέσεις όπου υπάρχει το γράμμα
         for (let i = 0; i < currentWord.length; i++) {
             if (currentWord[i] === userInput) {
                 lettersFound[i] = true;
@@ -84,21 +80,20 @@ const handleGuess = (element, buttonClicked) => {
         }
         message.textContent = "Σωστά!";
         message.className = "success";
-    } else {// Λάθος γράμμα
+    } else { // Λάθος γράμμα
         mistakesDone++;
         numberOfMistakes.textContent = mistakesDone;
         message.textContent = "Λάθος! Δοκίμασε ξανά.";
         message.className = "error";
 
-        // --- ΕΔΩ ΜΠΑΙΝΕΙ Η ΕΜΦΑΝΙΣΗ ΤΗΣ ΕΙΚΟΝΑΣ ---
-        const bodyPart = document.getElementById(`part-${mistakesDone}`);
-        if (bodyPart) {
-            bodyPart.classList.remove("hidden");
+        // --- ΔΙΟΡΘΩΣΗ: Αλλάζουμε δυναμικά το src της εικόνας ---
+        if (hangmanVisual && mistakesDone <= maximumMistakes) {
+            hangmanVisual.src = `images/letter_${mistakesDone}.png`;
         }
     }
 
-    updateDisplay();   // Ανανεώνω την εμφάνιση της λέξης
-    checkWinLoss();    // Έλεγχος για νίκη/ήττα
+    updateDisplay();   
+    checkWinLoss();    
 };
 
 const disableAllButtons = () =>{
@@ -113,29 +108,27 @@ const resetGame = () => {
     message.textContent = "";
     message.className = "";
     
-    // Κρύβουμε πάλι τις εικόνες του σώματος
-    document.querySelectorAll(".body-part").forEach(part => part.classList.add("hidden"));
+    // --- ΔΙΟΡΘΩΣΗ: Επαναφορά της εικόνας στο αρχικό στάδιο (letter_0.png) ---
+    if (hangmanVisual) {
+        hangmanVisual.src = "images/letter_0.png";
+    }
 
-    selectRandomWord(); // <-- Παράγει νέο lettersFound με το σωστό μήκος της νέας λέξης
+    selectRandomWord(); 
     showAlphabetToScreen();
     updateDisplay();
 };
 
-selectRandomWord(); // <-- ΑΠΑΡΑΙΤΗΤΟ: Επιλέγει την πρώτη λέξη πριν σχεδιαστεί η οθόνη
+selectRandomWord(); 
 showAlphabetToScreen();
 updateDisplay();
 
 resetButton.addEventListener("click", resetGame);
 window.addEventListener("keydown", (event)=>{
     const pressedKey = event.key.toUpperCase();
-    
-    // Βρίσκω όλα τα κουμπιά του αλφαβήτου
     const allButtons = document.querySelectorAll(".alphabet-letter-btn");
 
-    // 3. Ψάχνω αν κάποιο κουμπί έχει το γράμμα που πατήθηκε
     allButtons.forEach(btn => {
         if (btn.innerText === pressedKey && !btn.disabled) {
-            // Αν το βρω και δεν είναι ήδη απενεργοποιημένο, το "πατώ"
             handleGuess(pressedKey, btn);
         }
     });
