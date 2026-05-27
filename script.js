@@ -12,8 +12,8 @@ let mistakeCount = 0;
 let mistakesDone = 0;       
 let maximumMistakes = 5;    
 let lettersFound = []; 
-const ropeSound = new Audio("rope_swing.mp3");
-const errorSound = new Audio("error.mp3");
+const ropeSound = new Audio("https://barrious.github.io/javascript-hangman-greek/rope_swing.mp3");
+const errorSound = new Audio("https://barrious.github.io/javascript-hangman-greek/error.mp3");
 
 // Επιλογή στοιχείων από το DOM
 const alphabetContainer = document.getElementById("alphabet-container");
